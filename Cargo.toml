@@ -1,5 +1,5 @@
 [package]
-name = "plier-rs"
+name = "plier"
 version = "0.1.0"
 edition = "2021"
 

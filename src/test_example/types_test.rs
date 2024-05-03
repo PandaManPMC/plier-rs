@@ -1,5 +1,4 @@
-use crate::types;
-use std::env;
+use plier_rs::types;use std::env;
 #[cfg(test)]
 mod types_test {
     use super::*;
