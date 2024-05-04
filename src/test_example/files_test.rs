@@ -1,5 +1,5 @@
 
-use plier_rs::files;
+use plier::files;
 
 #[cfg(test)]
 mod files_test {
