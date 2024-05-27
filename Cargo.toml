@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 rust-crypto = "0.2.36"
+uuid = { version = "1.2", features = ["v4"] }
