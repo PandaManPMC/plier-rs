@@ -3,3 +3,4 @@ pub mod types;
 pub mod md;
 pub mod uid;
 pub mod str;
+pub mod time;
