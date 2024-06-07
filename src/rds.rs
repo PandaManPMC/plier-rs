@@ -11,11 +11,11 @@ pub struct RDS {
 //     fail_fast: true,
 //     blocking: fred::types::Blocking::default(),
 //     username: None,
-//     password: Some("U$89aRedis#".to_string()),
+//     password: Some("89aRedis".to_string()),
 //     server: ServerConfig::Centralized {
 //     server: Server{
-//         host: "35.240.170.217".into(),
-//         port: 26379,
+//         host: "127.0.0.1".into(),
+//         port: 6379,
 //     }
 //     },
 //     version: RespVersion::RESP2,

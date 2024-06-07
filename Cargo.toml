@@ -7,9 +7,9 @@ edition = "2021"
 
 [dependencies]
 rust-crypto = "0.2.36"
-uuid = { version = "1.2", features = ["v4"] }
-fred = "9.0.1"
-tokio = "1.37.0"
+uuid = { version = "1.8.0", features = ["v4"] }
+fred = { version = "9.0.3" }
+tokio = "1.38.0"
 lazy_static = "1.4.0"
 log = "0.4.21"
 serde = { version = "1.0.197", features = ["derive"] }
