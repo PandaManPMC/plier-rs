@@ -7,3 +7,4 @@ pub mod time;
 pub mod rds;
 pub mod macro_tool;
 pub mod authenticator;
+pub mod aes;

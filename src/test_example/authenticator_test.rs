@@ -6,7 +6,7 @@ mod authenticator_test {
     use super::*;
 
     #[test]
-    fn test_get_current_dir() {
+    fn test1() {
         let secret = authenticator::google_secret(32);
         println!("Secret: {}", secret);
 

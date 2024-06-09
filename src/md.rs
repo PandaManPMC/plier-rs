@@ -4,6 +4,7 @@ use crypto::sha2::Sha512;
 use crypto::digest::Digest;
 use crypto::md5::Md5;
 
+
 /// sha1 加密
 pub fn sha1(plaintext: String) -> String {
     let mut hasher = Sha1::new();
