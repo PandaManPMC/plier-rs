@@ -5,6 +5,11 @@ use crypto::aes::{cbc_decryptor, cbc_encryptor, KeySize};
 use crypto::blockmodes::PkcsPadding;
 use crypto::buffer::{BufferResult, ReadBuffer, RefReadBuffer, RefWriteBuffer, WriteBuffer};
 
+pub fn aes256_encrypt_string(data: String, key: String, iv: String) -> String {
+    let encrypted_data = aes256_encrypt(data.as_bytes(), key.as_bytes(), iv.as_bytes());
+    return hex::encode(&encrypted_data);
+}
+
 pub fn aes256_encrypt(data: &[u8], key: &[u8], iv: &[u8]) -> Vec<u8> {
     let mut encryptor = cbc_encryptor(KeySize::KeySize256, key, iv, PkcsPadding);
 
@@ -24,6 +29,19 @@ pub fn aes256_encrypt(data: &[u8], key: &[u8], iv: &[u8]) -> Vec<u8> {
     }
 
     result
+}
+
+pub fn aes256_decrypt_string(encrypted_data: String, key: String, iv: String) -> Result<String, std::str::Utf8Error> {
+    let b = aes256_decrypt(encrypted_data.as_bytes(), key.as_bytes(), iv.as_bytes());
+    let r = std::str::from_utf8(&b);
+    return match r {
+        Ok(s) => {
+            Ok(s.to_string())
+        },
+        Err(e) => {
+            Err(e)
+        },
+    }
 }
 
 pub fn aes256_decrypt(encrypted_data: &[u8], key: &[u8], iv: &[u8]) -> Vec<u8> {
