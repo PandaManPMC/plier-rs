@@ -37,7 +37,8 @@ pub fn aes256_decrypt_string(encrypted_data: String, key: String, iv: String) ->
         return Err(b.err().unwrap());
     }
 
-    let r = std::str::from_utf8(&b.unwrap());
+    let bi = b.unwrap();
+    let r = std::str::from_utf8(&bi);
     return match r {
         Ok(s) => {
             Ok(s.to_string())
