@@ -1,6 +1,7 @@
 extern crate crypto;
 extern crate hex;
 
+use std::fmt::format;
 use crypto::aes::{cbc_decryptor, cbc_encryptor, KeySize};
 use crypto::blockmodes::PkcsPadding;
 use crypto::buffer::{BufferResult, ReadBuffer, RefReadBuffer, RefWriteBuffer, WriteBuffer};
@@ -32,7 +33,13 @@ pub fn aes256_encrypt(data: &[u8], key: &[u8], iv: &[u8]) -> Vec<u8> {
 }
 
 pub fn aes256_decrypt_string(encrypted_data: String, key: String, iv: String) -> Result<String, String> {
-    let b = aes256_decrypt(encrypted_data.as_bytes(), key.as_bytes(), iv.as_bytes());
+    let res_decode = hex::decode(encrypted_data);
+    if res_decode.is_err() {
+        return Err(format!("{:?}", res_decode.err()))
+    }
+    let ve = res_decode.unwrap();
+
+    let b = aes256_decrypt(&ve, key.as_bytes(), iv.as_bytes());
     if b.is_err() {
         return Err(b.err().unwrap());
     }
