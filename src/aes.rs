@@ -31,20 +31,24 @@ pub fn aes256_encrypt(data: &[u8], key: &[u8], iv: &[u8]) -> Vec<u8> {
     result
 }
 
-pub fn aes256_decrypt_string(encrypted_data: String, key: String, iv: String) -> Result<String, std::str::Utf8Error> {
+pub fn aes256_decrypt_string(encrypted_data: String, key: String, iv: String) -> Result<String, String> {
     let b = aes256_decrypt(encrypted_data.as_bytes(), key.as_bytes(), iv.as_bytes());
-    let r = std::str::from_utf8(&b);
+    if b.is_err() {
+        return Err(b.err().unwrap());
+    }
+
+    let r = std::str::from_utf8(&b.unwrap());
     return match r {
         Ok(s) => {
             Ok(s.to_string())
         },
         Err(e) => {
-            Err(e)
+            Err(e.to_string())
         },
     }
 }
 
-pub fn aes256_decrypt(encrypted_data: &[u8], key: &[u8], iv: &[u8]) -> Vec<u8> {
+pub fn aes256_decrypt(encrypted_data: &[u8], key: &[u8], iv: &[u8]) -> Result<Vec<u8>, String> {
     let mut decryptor = cbc_decryptor(KeySize::KeySize256, key, iv, PkcsPadding);
 
     let mut read_buffer = RefReadBuffer::new(encrypted_data);
@@ -53,7 +57,13 @@ pub fn aes256_decrypt(encrypted_data: &[u8], key: &[u8], iv: &[u8]) -> Vec<u8> {
 
     let mut result = Vec::new();
     loop {
-        let res = decryptor.decrypt(&mut read_buffer, &mut write_buffer, true).unwrap();
+        let res_o = decryptor.decrypt(&mut read_buffer, &mut write_buffer, true);
+        if res_o.is_err() {
+            return Err(format!("{:?}",res_o.err()))
+        }
+
+        let res = res_o.unwrap();
+
         result.extend(write_buffer.take_read_buffer().take_remaining().iter().copied());
 
         match res {
@@ -62,5 +72,5 @@ pub fn aes256_decrypt(encrypted_data: &[u8], key: &[u8], iv: &[u8]) -> Vec<u8> {
         }
     }
 
-    result
+    Ok(result)
 }
