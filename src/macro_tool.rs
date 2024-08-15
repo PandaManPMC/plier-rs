@@ -22,12 +22,12 @@ macro_rules! create_serde_string_length_checker {
                     E: de::Error,
                 {
                     if 0 != self.min_length {
-                        if value.len() < self.min_length {
+                        if value.chars().count() < self.min_length {
                            return Err(E::invalid_value(Unexpected::Str(&value), &self));
                         }
                     }
 
-                    if value.len() <= self.max_length {
+                    if value.chars().count() <= self.max_length {
                         Ok(value.to_owned())
                     } else {
                         Err(E::invalid_value(Unexpected::Str(value), &self))
@@ -39,12 +39,12 @@ macro_rules! create_serde_string_length_checker {
                     E: de::Error,
                 {
                     if 0 != self.min_length {
-                        if value.len() < self.min_length {
+                        if value.chars().count() < self.min_length {
                             return Err(E::invalid_value(Unexpected::Str(&value), &self));
                         }
                     }
 
-                    if value.len() <= self.max_length {
+                    if value.chars().count() <= self.max_length {
                         Ok(value)
                     } else {
                         Err(E::invalid_value(Unexpected::Str(&value), &self))
