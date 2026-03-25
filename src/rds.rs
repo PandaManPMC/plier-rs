@@ -47,12 +47,12 @@ pub async fn init_pool(url: &str, pool_size: usize) -> Result<RedisPool, RedisEr
 impl RDS {
 
     pub async fn set<P: std::marker::Send>(&self, key: &str, val:P) -> Result<(), RedisError> where RedisValue: From<P> {
-        self.pool.set(key, val, None, None, false).await?;
+        self.pool.set::<(), _, _>(key, val, None, None, false).await?;
         Ok(())
     }
 
     pub async fn set_expire<P: std::marker::Send>(&self, key: &str, val:P, expire_second: i64) -> Result<(), RedisError> where RedisValue: From<P> {
-        self.pool.set(key, val, Some(Expiration::EX(expire_second)), None, false).await?;
+        self.pool.set::<(), _, _>(key, val, Some(Expiration::EX(expire_second)), None, false).await?;
         Ok(())
     }
 
